@@ -1,0 +1,62 @@
+{% extends "catalog.html" %}
+{% block content %}
+    <div id="main-container">
+        <!-- Main Heading Starts -->
+        <h2 class="main-heading text-center">
+            Login or create new account
+        </h2>
+        <!-- Main Heading Ends -->
+        <!-- Login Form Section Starts -->
+        <section class="login-area">
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- Login Panel Starts -->
+                    <div class="panel panel-smart">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Login</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                Please login using your existing account
+                            </p>
+
+                            <form method="post" action="{% url django.contrib.auth.views.login %}" class="form-inline" role="form">{% csrf_token %}
+                                {% if form.errors %}
+                                    <ul class="errorlist">
+                                        <li>You entered an invalid username or password.</li>
+                                    </ul>
+                                {% endif %}
+                                {{ form.username }}
+                                {{ form.password }}
+                                <input type="submit" value="Sign in" class="btn btn-danger" />
+                                <input type="hidden" name="next" value="{{ next }}" />
+                            </form>
+                            <!-- Login Form Ends -->
+                        </div>
+                    </div>
+                    <!-- Login Panel Ends -->
+                </div>
+                <div class="col-sm-6">
+                    <!-- Account Panel Starts -->
+                    <div class="panel panel-smart">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                            Create new account
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                Registration allows you to avoid filling in billing and shipping forms every time you checkout on this website
+                            </p>
+                            <a href="{% url register %}" class="btn btn-danger">
+                                Register
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Account Panel Ends -->
+                </div>
+            </div>
+        </section>
+        <!-- Login Form Section Ends -->
+    </div>
+{% endblock %}

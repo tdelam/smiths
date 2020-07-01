@@ -1,0 +1,53 @@
+{% extends "catalog.html" %}
+
+{% load search_tags catalog_filters i18n %}
+
+{% block content %}
+<div class="container">
+    <h3>{% trans "Search Results for:" %} <span>'{{ q }}'</span></h3>
+    
+    {% for product in results %}
+        <div class="row">
+            <div class="span3">
+                <ul class="media-gallery">
+                    <li><a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" alt="{{ product.name }}"></a></li>
+                </ul>
+            </div>
+            <!-- Products List -->
+            <div class="span9">
+                <div style="padding-top: 30px;">
+                    <h1><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h1>
+                    <ul class="nav nav-stacked product-info">
+                        {% if not product.is_book %}
+                            <li><strong>{% trans "Availability" %}</strong> 
+                                {% if product.quantity > 0 %}
+                                    <span class="label label-success">{% trans "In Stock" %}</span>
+                                {% else %}
+                                    <span class="label label-warning">{% trans "Out of Stock" %}</span>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    </ul>
+                
+                    {{ product.description|safe|truncatewords_html:"25" }}
+
+                </div>
+                <!-- Price -->
+                <p class="main-price2">
+                    <a class="btn btn-read-more" href="{{ product.get_absolute_url }}" />{% trans "Read more" %}</a>
+                    {% if product.sale_price %}
+                        <span>{{ product.old_price|currency }}</span>
+                        <strong>{{ product.price|currency }}</strong>
+                    {% else %}
+                        <strong>{{ product.price|currency }}</strong>
+                    {% endif %}
+                </p>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    {% empty %}
+        <p>{% trans "No products were found matching those search terms." %}</p>
+    {% endfor %}
+    {% pagination_links request paginator %}
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+<div class="form-group">
+	<label class="col-sm-3 control-label">
+		{{ form_field.label }}
+	</label>
+	<div class="col-sm-9">
+		{% if form_field.errors %}
+			{% for error in form_field.errors %}
+				<p><span class="label label-important">{{ form_field.label }}: {{ error }}</span></p>
+			{% endfor %}
+		{% endif %}
+		{{ form_field }}
+	</div>
+</div>

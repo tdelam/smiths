@@ -1,0 +1,13 @@
+<div id="search">
+<form action="{% url search_results %}">
+	<div class="input-group">
+	{{ form.q }}
+		{# <input type="text" class="form-control input-lg" placeholder="Search"> #}
+		<span class="input-group-btn">
+			<button class="btn btn-lg" type="button">
+			<i class="fa fa-search"></i>
+			</button>
+		</span>
+	</div>
+	</form>
+</div>

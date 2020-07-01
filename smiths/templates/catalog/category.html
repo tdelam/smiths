@@ -1,0 +1,86 @@
+{% extends "catalog.html" %}
+{% load catalog_filters i18n %}
+{% block content %}
+	<div id="main-container">
+		<div class="row">
+			<div class="col-md-9">
+				<!-- Breadcrumb Starts -->
+				<ol class="breadcrumb">
+					<li><a href="/">Home</a></li>
+					<li class="active">{{ category.name }}</li>
+				</ol>
+				<!-- Breadcrumb Ends -->
+				<!-- Main Heading Starts -->
+				<h2 class="main-heading2">{{ category.name }}</h2>
+				<div class="row">
+				{% for product in products %}
+
+						<div class="col-md-4 col-sm-6">
+							<div class="product-col">
+							<div class="image">
+								<a href="{{ product.get_absolute_url }}">
+									{% if product.image %}
+										<img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-responsive">
+									{% else %}
+										<img src="{{ MEDIA_URL }}images/product-images/2.jpg" alt="{{ product.name }}" class="img-responsive">
+									{% endif %}
+								</a>
+							</div>
+							<div class="caption">
+								<h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
+                <div class="description">
+									{{ product.description|safe|truncatewords_html:25 }}
+								</div>
+								<div class="price">
+									{% if product.sale_price %}
+										<span class="price-old">{{ product.old_price|currency }}</span>
+										<span class="price-new">{{ product.price|currency }}</span>
+									{% else %}
+										<span class="price-new">{{ product.price|currency }}</span>
+									{% endif %}
+								</div>
+								<div class="cart-button button-group">
+									<a href="{{ product.get_absolute_url }}" class="btn btn-cart"><i class="fa fa-shopping-cart"></i>
+									Read more</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+				</div>
+			</div>
+			<div class="col-md-3">
+				<h3 class="side-heading">Bestsellers</h3>
+				<div class="product-col">
+					{% for bestseller in bestsellers %}
+						<div class="image">
+							{% if bestseller.image %}
+								<img src="{{ bestseller.image.url }}" alt="{{ bestseller.name }}" class="img-responsive">
+							{% else %}
+								<img src="{{ MEDIA_URL }}images/product-images/20.jpg" alt="{{ p.name }}" class="img-responsive">
+							{% endif %}
+						</div>
+						<div class="caption">
+							<h4><a href="{{ bestseller.get_absolute_url }}">{{ bestseller.name }}</a></h4>
+							<div class="description">
+								{{ bestseller.description|safe|truncatewords_html:25 }}
+							</div>
+							<div class="price">
+								{% if bestseller.sale_price %}
+									<span class="price-old">{{ bestseller.old_price|currency }}</span>
+									<span class="price-new">{{ bestseller.price|currency }}</span>
+								{% else %}
+									<span class="price-new">{{ bestseller.price|currency }}</span>
+								{% endif %}
+							</div>
+							<div class="cart-button button-group">
+								<a href="{{ bestseller.get_absolute_url }}" class="btn btn-cart">More Details <i class="fa fa-arrow-right"></i></a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<!-- Bestsellers Links Ends -->
+			</div>
+		</div>
+	</div>
+{% endblock %}

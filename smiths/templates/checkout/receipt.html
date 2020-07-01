@@ -1,0 +1,47 @@
+{% extends "catalog.html" %}
+{% load catalog_filters i18n %}
+
+{% block content %}
+
+		<div class="row">
+			<div class="receipt">
+				<h3>{% trans "Thank you. Your Order Number is:" %} {{ order.id }}</h3>
+				<table class="table">
+					<thead>
+						<tr>
+              <th>{% trans "Quantity" %}</th>
+							<th class="p-name">{% trans "Name" %}</th>
+							<th>{% trans "Price" %}</th>
+							<th colspan="4" class="text-right">{% trans "Total" %}</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<td colspan="4" class="text-right" style="height:30px;"><span class="pricing">{% trans "Sub total:" %}</span> {{ order.total|currency }}</td>
+						</tr>
+            <tr>
+              <td colspan="4" class="text-right" style="height:30px;"><span class="pricing">{% trans "Taxes:" %}</span> {{ cart_taxes|currency }}</td>
+            </tr>
+						<tr>
+							<td colspan="4" class="text-right" style="height:30px;"><span class="pricing">Delivery Fee:</span> {{ shipping_price|currency }}</</td>
+						</tr>
+						<tr>
+							<td colspan="4" class="text-right" style="height:30px;"><span class="pricing">{% trans "Total:" %}</span> {{ total|currency }}</td>
+						</tr>
+						</tr>
+					</tfoot>
+					<tbody>
+						{% for item in order_items %}
+							<tr>
+                <td>{{ item.quantity }}</td>
+								<td class="p-name">{{ item.name }}</td>
+								<td>{{ item.price|currency }}</td>
+								<td colspan="4" class="text-right">{{ item.total|currency }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+{% endblock %}

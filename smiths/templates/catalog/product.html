@@ -1,0 +1,175 @@
+{% extends "catalog.html" %}
+{% load catalog_filters i18n %}
+{% block content %}
+    <div id="main-container">
+        <div class="row">
+            <!-- Primary Content Starts -->
+            <div class="col-md-9">
+                <!-- Breadcrumb Starts -->
+                <ol class="breadcrumb">
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Category</a></li>
+                    <li class="active">Product</li>
+                </ol>
+                <!-- Breadcrumb Ends -->
+                <!-- Product Info Starts -->
+                <div class="row product-info">
+                    <!-- Left Starts -->
+                    <div class="col-sm-5 images-block">
+                        <p>
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-responsive thumbnail">
+                            {% else %}
+                                <img src="{{ MEDIA_URL }}images/product-images/pimg3.jpg" alt="{{ product.name }}" class="img-responsive thumbnail">
+                            {% endif %}
+                        </p>
+                    </div>
+                    <!-- Left Ends -->
+                    <!-- Right Starts -->
+                    <div class="col-sm-7 product-details">
+                        <!-- Product Name Starts -->
+                        <h2>{{ product.name }}</h2>
+                        <!-- Product Name Ends -->
+                        <hr />
+                        <!-- Manufacturer Starts -->
+                        <ul class="list-unstyled manufacturer">
+                            <li>
+                                <span>In categor{{ categories.count|pluralize:"y,ies" }}:</span>
+                                {% for category in categories %}
+                                    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>{% if not forloop.last %},{% endif %}
+                                {% endfor %}
+                            </li>
+                            <li>
+                                <span>Availability:</span>
+                                {% if product.quantity > 0 %}
+                                    <strong class="label label-success">In Stock</strong>
+                                {% else %}
+                                    <strong class="label label-success">Out of Stock</strong>
+                                {% endif %}
+                            </li>
+                        </ul>
+                        <!-- Manufacturer Ends -->
+                        <hr />
+                        <!-- Price Starts -->
+                        <div class="price">
+                            <span class="price-head">Price :</span>
+                            {% if product.sale_price %}
+                                <span class="price-old">{{ product.old_price|currency }}</span>
+                                <span class="price-new">{{ product.price|currency }}</span>
+                            {% else %}
+                                <span class="price-new">{{ product.price|currency }}</span>
+                            {% endif %}
+                        </div>
+                        <!-- Price Ends -->
+                        <hr />
+                        <!-- Available Options Starts -->
+                        <div class="options">
+                            <form method="post" action=".">{% csrf_token %}
+                                <div class="form-group">
+                                    <label class="control-label text-uppercase" for="input-quantity">Qty:</label>
+                                    {{ form.quantity.errors }}
+                                    {{ form.quantity }}
+                                    {{ form.product_slug }}
+                                </div>
+
+                                <div class="cart-button button-group">
+                                    <button type="submit" class="btn btn-cart">
+                                    Add to cart
+                                    <i class="fa fa-shopping-cart"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Available Options Ends -->
+                        <hr />
+                    </div>
+                    <!-- Right Ends -->
+                </div>
+                <!-- product Info Ends -->
+                <!-- Product Description Starts -->
+                <div class="product-info-box">
+                    <h4 class="heading">Description</h4>
+                    <div class="content panel-smart">
+                        {{ product.description|safe }}
+                    </div>
+                </div>
+                <!-- Product Description Ends -->
+                <!-- Related Products Starts -->
+                <div class="product-info-box">
+                    <h4 class="heading">Related Products</h4>
+                    <!-- Products Row Starts -->
+                    <div class="row">
+                        {% for p in product.cross_sells_hybrid %}
+                            <div class="col-md-4 col-sm-6">
+                                <div class="product-col">
+                                    <div class="image">
+                                        {% if p.image %}
+                                            <img src="{{ p.image.url }}" alt="{{ p.name }}" class="img-responsive">
+                                        {% else %}
+                                            <img src="{{ MEDIA_URL }}images/product-images/20.jpg" alt="{{ p.name }}" class="img-responsive">
+                                        {% endif %}
+                                    </div>
+                                    <div class="caption">
+                                        <h4><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></h4>
+                                        <div class="description">
+                                            {{ p.description|safe|truncatewords_html:25 }}
+                                        </div>
+                                        <div class="price">
+                                            {% if p.sale_price %}
+                                                <span class="price-old">{{ p.old_price|currency }}</span>
+                                                <span class="price-new">{{ p.price|currency }}</span>
+                                            {% else %}
+                                                <span class="price-new">{{ p.price|currency }}</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="cart-button button-group">
+                                            <a href="{{ p.get_absolute_url }}" class="btn btn-cart">More Details <i class="fa fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Products Row Ends -->
+                </div>
+                <!-- Related Products Ends -->
+            </div>
+            <!-- Primary Content Ends -->
+            <!-- Sidebar Starts -->
+            <div class="col-md-3">
+                <!-- Bestsellers Links Starts -->
+                <h3 class="side-heading">Bestsellers</h3>
+                <div class="product-col">
+                    {% for bestseller in bestsellers %}
+                        <div class="image">
+                            {% if bestseller.image %}
+                                <img src="{{ bestseller.image.url }}" alt="{{ bestseller.name }}" class="img-responsive">
+                            {% else %}
+                                <img src="{{ MEDIA_URL }}images/product-images/20.jpg" alt="{{ p.name }}" class="img-responsive">
+                            {% endif %}
+                        </div>
+                        <div class="caption">
+                            <h4><a href="{{ bestseller.get_absolute_url }}">{{ bestseller.name }}</a></h4>
+                            <div class="description">
+                                {{ bestseller.description|safe|truncatewords_html:25 }}
+                            </div>
+                            <div class="price">
+                                {% if bestseller.sale_price %}
+                                    <span class="price-old">{{ bestseller.old_price|currency }}</span>
+                                    <span class="price-new">{{ bestseller.price|currency }}</span>
+                                {% else %}
+                                    <span class="price-new">{{ bestseller.price|currency }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="cart-button button-group">
+                                <a href="{{ bestseller.get_absolute_url }}" class="btn btn-cart">More Details <i class="fa fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- Bestsellers Links Ends -->
+            </div>
+            <!-- Sidebar Ends -->
+        </div>
+    </div>
+{% endblock %}

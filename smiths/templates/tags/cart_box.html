@@ -1,0 +1,5 @@
+{% load i18n  %}
+
+{% with cart_item_count as cart_count %}
+   <a href="{% url show_cart %}"><span class="label-lg label-danger"><i class="fa fa-shopping-cart"></i> {{ cart_count }}</span></a>
+{% endwith %}

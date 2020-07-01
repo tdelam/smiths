@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Internal Server Error – 500" %}{% endblock %}
+
+{% block site_wrapper %}
+{% blocktrans %}
+    
+
+  <p>We're sorry, but the site you are trying to access is currently experiencing problems.</p>
+  <p>We apologize for any inconvenience. Please try back again later.</p>
+  {% endblocktrans %}
+{% endblock %}

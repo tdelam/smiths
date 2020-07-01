@@ -1,0 +1,17 @@
+{% extends "catalog.html" %}
+{% load catalog_filters i18n %}
+
+{% block content %}
+
+    <div class="row">
+      <div class="receipt">
+        <h3>Thank you for your order</h3>
+        <p>Your order details are as follows:</p>
+        <ul>
+          <li>Details: {{pickupdate}} @ {{ pickuptime }}</li>
+          <li>Location: {{ location }}</li>
+        </ul>
+      </div>
+    </div>
+
+{% endblock %}

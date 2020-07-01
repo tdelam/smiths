@@ -1,0 +1,39 @@
+{% load catalog_filters %}
+<section class="product-carousel">
+    <h2 class="product-head">{{ header_text }}</h2>
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="owl-product" class="owl-carousel">
+                {% for product in products %}
+                    <div class="item">
+                        <div class="product-col">
+                            <div class="image">
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="caption">
+                                <h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
+           <!--                      <div class="description">
+                                    {{ product.description|safe|truncatewords_html:25 }}
+                                </div> -->
+                                <div class="price">
+                                    {% if product.sale_price %}
+                                        <span class="price-old">{{ product.old_price|currency }}</span>
+                                        <span class="price-new">{{ product.price|currency }}</span>
+                                    {% else %}
+                                        <span class="price-new">{{ product.price|currency }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="cart-button button-group">
+                                    <a href="{{ product.get_absolute_url }}" class="btn btn-cart"><i class="fa fa-shopping-cart"></i>
+                                    Read more</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,22 @@
+Hello,
+
+Someone has placed an order from the web site. The details are as follows
+
+Bill to:
+{{ instance.order.billing_name }}
+{{ instance.order.billing_address_1 }}
+{{ instance.order.billing_address_2 }}
+{{ instance.order.city }}
+{{ instance.order.state_province }}
+{{ instance.order.country }}
+{{ instance.order.zip_postal }}
+
+Ship to:
+{{ instance.order.shipping_name }}
+{{ instance.order.email }}
+{{ instance.order.phone }}
+{{ instance.order.shipping_address_1 }}
+{{ instance.order.shipping_address_2 }}
+
+
+{{ url }}/admin/checkout/order/{{ instance.order_id }}

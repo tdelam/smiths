@@ -1,0 +1,16 @@
+Django==1.4.10
+Fabric==1.10.0
+Markdown==2.5.1
+MySQL-python==1.2.5
+Pillow==2.5.3
+South==1.0
+django-ckeditor==4.4.6
+django-classy-tags==0.5.1
+django-extended-flatpages==0.1
+django-grappelli==2.4.8
+django-sekizai==0.7
+ecdsa==0.11
+paramiko==1.15.1
+pycrypto==2.6.1
+python-memcached==1.53
+django-bootstrap3-datetimepicker

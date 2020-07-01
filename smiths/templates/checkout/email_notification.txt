@@ -1,0 +1,1 @@
+Hello, {{ order.billing_name }}, Thanks for your order

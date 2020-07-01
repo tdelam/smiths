@@ -1,0 +1,144 @@
+{% extends "catalog.html" %}
+{% load checkout_tags sekizai_tags %}
+{% block content %}
+	{% addtoblock "js" %}
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function () {
+					$('#id_billing_shipping_same').click(function () {
+					$('#id_billing_name').val($('#id_shipping_name').val());
+					$('#id_billing_address_1').val($('#id_shipping_address_1').val());
+					$('#id_billing_address_2').val($('#id_shipping_address_2').val());
+				});
+			});
+		</script>
+	{% endaddtoblock %}
+
+		<div id="main-container">
+		<h2 class="main-heading text-center">Checkout</h2>
+				<div class="row">
+				<!-- Shipping & Shipment Block Starts -->
+					<div class="col-sm-12">
+					<!-- Taxes Block Starts -->
+						<div class="panel panel-smart">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+									Delivery/Pickup Information
+								</h3>
+							</div>
+							<div class="panel-body">
+							<!-- Form Starts -->
+								<form action="." method="post" class="form-horizontal" role="form">{% csrf_token %}
+									{% if request.session.pickup %}
+										{% form_field_for form.location %}
+									{% endif %}
+									{% form_field_for form.shipping_name %}
+									{% form_field_for form.email %}
+									{% form_field_for form.phone %}
+									{% form_field_for form.shipping_address_1 %}
+									{% form_field_for form.shipping_address_2 %}
+
+									{% if request.session.pickup %}
+
+									<div class="form-group">
+										<label for="inputRegion" class="col-sm-3 control-label">Pick up Date:</label>
+										<div class="col-sm-9">
+											<div class="input-group date">
+												<input type="text" id="pickdatepick" name="pickdatepick" class="form-control">
+												<span class="input-group-addon">
+													<i class="glyphicon glyphicon-th"></i>
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="day" class="col-sm-3 control-label">Pick up Time: </label>
+										<div class="col-sm-9">
+											<select class="form-control" id="picktime" name="picktime">
+								      	<option value="00:00">00:00</option>      
+								        <option value="00:30">00:30</option>      
+								        <option value="01:00">01:00</option>     
+								        <option value="01:30">01:30</option>      
+								        <option value="02:00">02:00</option>      
+								        <option value="02:30">02:30</option>      
+								        <option value="03:00">03:00</option>      
+								        <option value="03:30">03:30</option>      
+								        <option value="04:00">04:00</option>      
+								        <option value="04:30">04:30</option>      
+								        <option value="05:00">05:00</option>      
+								        <option value="05:30">05:30</option>      
+								        <option value="06:00">06:00</option>      
+								        <option value="06:30">06:30</option>     
+								        <option value="07:00">07:00</option>      
+								        <option value="07:30">07:30</option>      
+								        <option value="08:00">08:00</option>      
+								        <option value="08:30">08:30</option>      
+								        <option value="09:00">09:00</option>      
+								        <option value="09:30">09:30</option>      
+								        <option value="10:00">10:00</option>      
+								        <option value="10:30">10:30</option>      
+								        <option value="11:00">11:00</option>      
+								        <option value="11:30">11:30</option>      
+								        <option value="12:00">12:00</option>      
+								        <option value="12:30">12:30</option>      
+								        <option value="13:00">13:00</option>      
+								        <option value="13:30">13:30</option>      
+								        <option value="14:00">14:00</option>      
+								        <option value="14:30">14:30</option>      
+								        <option value="15:00">15:00</option>      
+								        <option value="15:30">15:30</option>      
+								        <option value="16:00">16:00</option>      
+								        <option value="16:30">16:30</option>      
+								        <option value="17:00">17:00</option>      
+								        <option value="17:30">17:30</option>      
+								        <option value="18:00">18:00</option>      
+								        <option value="18:30">18:30</option>      
+								        <option value="19:00">19:00</option>      
+								        <option value="19:30">19:30</option>      
+								        <option value="20:00">20:00</option>      
+								        <option value="20:30">20:30</option>      
+								        <option value="21:00">21:00</option>      
+								        <option value="21:30">21:30</option>      
+								        <option value="22:00">22:00</option>      
+								        <option value="22:30">22:30</option>      
+								        <option value="23:00">23:00</option>      
+								        <option value="23:30">23:30</option>
+											</select>
+										</div>
+									</div>
+						  		{% endif %}
+						  		<hr>
+						  		<h3 class="panel-title">Billing Information</h3>
+						  			{% form_field_for form.instore_pickup %}
+										{% form_field_for form.notes %}
+										<div id="billing">
+										{% form_field_for form.billing_name %}
+										{% form_field_for form.billing_address_1 %}
+										{% form_field_for form.billing_address_2 %}
+										{% form_field_for form.billing_city %}
+										{% form_field_for form.billing_state_province %}
+										{% form_field_for form.billing_zip_postal %}
+										{% form_field_for form.billing_country %}
+										
+											{% if not user_profile.is_corporate_account %}
+												{% form_field_for form.credit_card_number %}
+												{% form_field_for form.credit_card_type %}
+												{% form_field_for form.credit_card_expire_month %}
+												{% form_field_for form.credit_card_expire_year %}
+												{% form_field_for form.credit_card_cvv %}
+											{% endif %}
+										</div>
+
+									<div class="form-group">
+										<div class="col-sm-6 col-sm-offset-3">
+											<input type="submit" value="Place Order" class="btn btn-primary" />
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					
+					</div>
+				</div>
+{% endblock %}

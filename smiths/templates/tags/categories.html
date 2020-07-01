@@ -1,0 +1,7 @@
+{% with active_categories as categories %}
+    {% for category in categories %}
+        <li {% ifequal category.get_absolute_url request_path %}class="active"{% endifequal %}>
+            <a href="{{ category.get_absolute_url }}" class="category">{{ category.name }}</a>
+        </li>
+    {% endfor %}
+{% endwith %}

@@ -1,0 +1,259 @@
+{% extends "catalog.html" %}
+{% load catalog_filters %}
+{% block content %}
+	<div id="main-container">
+		<h2 class="main-heading text-center">Shopping Cart</h2>
+		<div class="table-responsive shopping-cart-table">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<td class="text-center">Name</td>
+						<td class="text-center">Price</td>
+						<td class="text-center">Quantity</td>
+						<td class="text-center">Actions</td>
+						<td class="text-center">Total</td>
+					</tr>
+				</thead>
+				<tbody>
+					{% if cart_items %}
+						{% for item in cart_items %}
+							<tr>
+								<td class="text-center"><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></td>
+								<td class="text-center">{{ item.price|currency }}</td>
+								<td>
+									<form method="post" action="." class="cart">
+										{% csrf_token %}
+										<div class="form-group col-xs-8">
+											<input type="text" name="quantity" class="form-control" value="{{ item.quantity }}"  />
+											<input type="hidden" name="item_id" value="{{ item.id }}" />
+										</div>
+										<div class="form-group">
+											<input type="submit" name="submit" value="Update" class="btn btn-sm btn-primary" />
+										</div>
+									</form>
+								</td>
+
+								<td class="text-center">
+									<form method="post" action="." class="cart">
+										{% csrf_token %}
+										<input type="hidden" name="item_id" value="{{ item.id }}" />
+										<input type="submit" name="submit" value="Remove" class="btn btn-danger btn-sm" />
+									</form>
+								</td>
+								<td class="text-center">
+									{{ item.total|currency }}
+
+								</td>
+							</tr>
+						{% endfor %}
+					{% else %}
+						<tr>
+							<td colspan="6" style="height:30px;">
+								<div class="alert alert-info">
+									<button type="button" class="close" data-dismiss="alert">×</button>
+									<strong>Info!</strong> Sorry, you do not have anything in your cart.
+								</div>
+							</td>
+						</tr>
+					{% endif %}
+				</tbody>
+				<tfoot>
+				<tr>
+					<th class="text-right" colspan="4">Subtotal</th>
+					<th class="right">
+						<span class="sub-total">{{ cart_subtotal|currency }}</span>
+					</th>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+
+		<section class="registration-area">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-smart">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								Pickup In Store
+							</h3>
+						</div>
+						<div class="panel-body">
+							<h5>With in-store pickup, you can place your order online, then pick it up at a Smith's location of your choice.</h5>
+							<form action="." class="form-horizontal" id="ship" role="form" method="post">{% csrf_token %}
+								<input type="submit" name="submit" value="Store Pickup" alt="Checkout" class="btn btn-danger btn-lg">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="registration-area">
+			<div class="row">
+				<!-- Shipping & Shipment Block Starts -->
+				<div class="col-sm-6">
+					<!-- Taxes Block Starts -->
+					<div class="panel panel-smart">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+							Delivery
+							</h3>
+						</div>
+						<div class="panel-body">
+							<!-- Form Starts -->
+							<form action="." class="form-horizontal" id="ship" role="form" method="post">{% csrf_token %}
+								<div class="form-group">
+									<label for="inputRegion" class="col-sm-3 control-label">Date:</label>
+									<div class="col-sm-9">
+										<div class="input-group date">
+											<input type="text" id="datepick" name="datepick" class="form-control" required>
+											<span class="input-group-addon">
+												<i class="glyphicon glyphicon-th"></i>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="day" class="col-sm-3 control-label">Time: </label>
+									<div class="col-sm-9">
+										<select class="form-control" id="time" name="time" required>
+							      	<option value="00:00">00:00</option>
+							        <option value="00:30">00:30</option>
+							        <option value="01:00">01:00</option>
+							        <option value="01:30">01:30</option>
+							        <option value="02:00">02:00</option>
+							        <option value="02:30">02:30</option>
+							        <option value="03:00">03:00</option>
+							        <option value="03:30">03:30</option>
+							        <option value="04:00">04:00</option>
+							        <option value="04:30">04:30</option>
+							        <option value="05:00">05:00</option>
+							        <option value="05:30">05:30</option>
+							        <option value="06:00">06:00</option>
+							        <option value="06:30">06:30</option>
+							        <option value="07:00">07:00</option>
+							        <option value="07:30">07:30</option>
+							        <option value="08:00">08:00</option>
+							        <option value="08:30">08:30</option>
+							        <option value="09:00">09:00</option>
+							        <option value="09:30">09:30</option>
+							        <option value="10:00">10:00</option>
+							        <option value="10:30">10:30</option>
+							        <option value="11:00">11:00</option>
+							        <option value="11:30">11:30</option>
+							        <option value="12:00">12:00</option>
+							        <option value="12:30">12:30</option>
+							        <option value="13:00">13:00</option>
+							        <option value="13:30">13:30</option>
+							        <option value="14:00">14:00</option>
+							        <option value="14:30">14:30</option>
+							        <option value="15:00">15:00</option>
+							        <option value="15:30">15:30</option>
+							        <option value="16:00">16:00</option>
+							        <option value="16:30">16:30</option>
+							        <option value="17:00">17:00</option>
+							        <option value="17:30">17:30</option>
+							        <option value="18:00">18:00</option>
+							        <option value="18:30">18:30</option>
+							        <option value="19:00">19:00</option>
+							        <option value="19:30">19:30</option>
+							        <option value="20:00">20:00</option>
+							        <option value="20:30">20:30</option>
+							        <option value="21:00">21:00</option>
+							        <option value="21:30">21:30</option>
+							        <option value="22:00">22:00</option>
+							        <option value="22:30">22:30</option>
+							        <option value="23:00">23:00</option>
+							        <option value="23:30">23:30</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="postal" class="col-sm-3 control-label">Postal Code: </label>
+									<div class="col-sm-9">
+										<input type="text" id="postal" name="postal" value="{{ request.session.postal }}" class="form-control" required>
+										Don't know the postal code? <a href="https://www.canadapost.ca/cpo/mc/personal/postalcode/fpc.jsf" target="_blank">Find a postal code here.</a>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-9">
+										<div class="form-group">
+											<input type="submit"
+											name="submit" value="Update Total" class="btn btn-sm btn-danger"
+											id="update-total" />
+										</div>
+										{% if error %}
+											<div class="danger">
+												<h4>
+													<span class="important">
+                            * Please contact the store if you are trying to place an order after 2:00pm for today.
+                          </span>
+												</h4>
+											</div>
+										{% endif %}
+									</div>
+								</div>
+							</form>
+							<!-- Form Ends -->
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+
+					<!-- Shipping & Shipment Block Ends -->
+					<!-- Conditions Panel Starts -->
+					<div class="panel panel-smart">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+							Terms &amp; Conditions
+							</h3>
+						</div>
+						<div class="panel-body">
+							<p>
+								HTML Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula.
+							</p>
+						</div>
+					</div>
+					<!-- Conditions Panel Ends -->
+					<!-- Total Panel Starts -->
+					<div class="panel panel-smart">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+							Total
+							</h3>
+						</div>
+						<div class="panel-body">
+							<dl class="dl-horizontal">
+								<dt>Subtotal :</dt>
+								<dd>{{ cart_subtotal|currency }}</dd>
+								<dt>Delivery Fee :</dt>
+								<dd>{{ delivery|currency }}</dd>
+								<dt>Taxes</dt>
+								<dd>{{ cart_taxes|currency }}</dd>
+							</dl>
+							<hr />
+							<dl class="dl-horizontal total">
+								<dt>Total :</dt>
+								<dd>{{ total|currency }}</dd>
+							</dl>
+							<hr />
+							<div class="text-uppercase clearfix">
+
+							{% if cart_items and not error or request.user.is_authenticated and request.user.is_superuser %}
+								<form method="post" action=".">
+									{% csrf_token %}
+									<span class="hidden-xs"><a class="btn btn-default pull-left" href="{% url catalog_home %}">Continue Shopping</a></span>
+									{{ btn_display }}
+									<input type="submit" name="submit" value="Checkout" alt="Checkout" id="button" class="btn btn-danger pull-right">
+								</form>
+							{% endif %}
+							</div>
+						</div>
+					</div>
+					<!-- Total Panel Ends -->
+				</div>
+				<!-- Discount & Conditions Blocks Ends -->
+			</div>
+		</div>
+	</section>
+{% endblock %}

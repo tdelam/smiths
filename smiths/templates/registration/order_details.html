@@ -1,0 +1,36 @@
+{% extends "catalog.html" %}
+
+{% load catalog_filters i18n %}
+
+{% block content %}
+<div class="container user">
+    <div class="row">
+        <h2>{% trans "Details for Order #" %} {{ order.id }}</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Price" %}</th>
+                    <th>{% trans "Quantity" %}</th>
+                    <th>{% trans "Total" %}</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="right" style="height:30px;">{% trans "Order Total:" %} {{ order.total|currency }}</td>
+                </tr>
+            </tfoot>
+            <tbody>
+                {% for item in order_items %}
+                    <tr>
+                        <td><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></td>
+                        <td>{{ item.price|currency }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td class="right">{{ item.total|currency }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

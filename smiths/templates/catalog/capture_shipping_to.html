@@ -1,0 +1,20 @@
+{% extends "catalog.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <form method="post" action="." class="form-signin">
+                <h2>{% trans "Shipping Information" %}</h2><br>
+                {% csrf_token %}
+                <div class="checkbox">        
+                    {{ form.shipping_to }}
+                    {{ form.shipping_to.label_tag }}
+                </div>
+                <input type="submit" name="submit" value="{% trans 'Continue' %}" class="btn btn-danger" />
+                <p><small>{% trans "Please Note: Shipping to campus is free otherwise it is $7.99 + 1$ for each additional book" %}</small></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}
