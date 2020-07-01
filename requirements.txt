@@ -9,7 +9,7 @@ django-classy-tags==0.5.1
 django-extended-flatpages==0.1
 django-grappelli==2.4.8
 django-sekizai==0.7
-ecdsa==0.11
+ecdsa==0.13.3
 paramiko==1.15.1
 pycrypto==2.6.1
 python-memcached==1.53
